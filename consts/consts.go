@@ -1,3 +1,4 @@
+/*常量篇*/
 package main
 
 import "fmt"
