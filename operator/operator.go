@@ -55,14 +55,16 @@ func Relation(operator string) string {
       } else {
 	r = "第三行 - a 不大于 b\n" 
       }
-    case "<=" :
-      if(a <= b) {
-	r = "第四行 - b 小于等于  a\n"
-      }
     case ">=" :
       if(a >= b) {
-	r = "第五行 - a大于等于 b\n"
+	r = "第四行 - a大于等于 b\n"
       }
+    case "<=" :
+      if(a <= b) {
+	r = "第五行 - a 小于等于  b\n"
+      } else {
+	r = "第五行 - a 不小于等于  b\n"
+      }  
     case "!=" :
       if(a != b){
 	r = "第六行 - a 不等于 b\n"
