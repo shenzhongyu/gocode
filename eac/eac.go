@@ -14,7 +14,6 @@ func main() {
    }   
   
    for {
-      
      fmt.Printf("loop")
      break
     
@@ -31,6 +30,13 @@ func main() {
        fmt.Printf("打印第 %d 行的数字 \n", n)
 
    }
+   
+   //乘法口诀表
+   for  c := 1; c <= 9; c++ {
+     for r := 1; r <= c; r++ {
+       fmt.Println("|", r, "x", c ,"=", r*c)
+    }
+  }
 
 
 }
