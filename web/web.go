@@ -1,36 +1,36 @@
 package main
 
 import (
-  "fmt"
-  "strconv"
-  "net/http"
+	"fmt"
+	"net/http"
+	"strconv"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintf(w,templateStr, r.URL.Path[1:], multiplicationTable())
+	fmt.Fprintf(w, templateStr, r.URL.Path[1:], multiplicationTable())
 }
 
-func multiplicationTable() string{
-  var str string
-  for r := 1; r <= 9; r++ {
-    str += "<tr>" 
-    for c := 1; c <= r; c++ {
-      str += "<td>"
-      str += strconv.Itoa(c)
-      str += " x "
-      str += strconv.Itoa(r)
-      str += " = "
-      str += strconv.Itoa(r * c)
-      str += "</td>"
-    }
-    str +="</tr>"
-  } 
-  return str
-} 
+func multiplicationTable() string {
+	var str string
+	for r := 1; r <= 9; r++ {
+		str += "<tr>"
+		for c := 1; c <= r; c++ {
+			str += "<td>"
+			str += strconv.Itoa(c)
+			str += " x "
+			str += strconv.Itoa(r)
+			str += " = "
+			str += strconv.Itoa(r * c)
+			str += "</td>"
+		}
+		str += "</tr>"
+	}
+	return str
+}
 
 func main() {
-  http.HandleFunc("/",handler)
-  http.ListenAndServe(":8090", nil)
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8090", nil)
 }
 
 const templateStr = `
