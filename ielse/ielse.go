@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 const(
-  UNKNOWN iota
+  UNKNOWN = iota
   MALE
   FAMALE
 )
