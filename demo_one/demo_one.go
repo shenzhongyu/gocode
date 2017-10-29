@@ -5,15 +5,15 @@ import (
 	"flag"
 	"os"
 	"bufio"
+	"io"
 	"strconv"
 	"time"
 	"github.com/shenzhongyu/gocode/demo_one/algorithm_sort"
-	"io"
 )
 
-var infile *string = flag.String("i", "infile", "File contains values for sorting")
-var outfile *string = flag.String("o", "outfile", "File to receive sorted values")
-var algorithm *string = flag.String("a", "qsort", "Sort alogorithm")
+var infile *string = flag.String("i", "files/unsorted.dat", "File contains values for sorting")
+var outfile * string = flag.String("o", "files/sorted.dat", "File to receive sorted values.")
+var algorithm *string = flag.String("a", "qsort", "Sort algorithm")
 var p = fmt.Println
 
 func main() {
@@ -21,19 +21,20 @@ func main() {
 
 	if infile != nil {
 		p("infile =", *infile, "outfile =", *outfile, "algorithm =", *algorithm)
-
 	}
 
 	values, err := readValues(*infile)
 	if err == nil {
 		t1 := time.Now()
 		switch *algorithm {
-			case "qsort":
-				algorithm_sort.QuickSort(values)
-			case "bubblesort":
-				algorithm_sort.BubbleSort(values)
-			default:
-				p("Sorting algorithm", *algorithm, "is either unknow or unsupported.")
+		case "qsort":
+			algorithm_sort.QuickSort(values)
+			break
+		case "bubblesort":
+			algorithm_sort.BubbleSort(values)
+			break
+		default:
+			p("Sorting a algorithm", *algorithm, "is either unknow or unsupported.")
 		}
 		t2 := time.Now()
 
@@ -48,13 +49,15 @@ func main() {
 
 func readValues(infile string) (values []int, err error) {
 	file, err := os.Open(infile)
-	if err !=nil {
-		p("Failed to open the input file", infile)
+	if err != nil {
+		p("Failed Open the input file", infile)
 		return
 	}
+
 	defer file.Close()
 
 	br := bufio.NewReader(file)
+
 	values = make([]int, 0)
 
 	for {
@@ -67,7 +70,7 @@ func readValues(infile string) (values []int, err error) {
 		}
 
 		if isPrefix {
-			p("A too long line, seens unexpected.")
+			p("A too long line, seems unexpected.")
 			return
 		}
 
@@ -79,19 +82,18 @@ func readValues(infile string) (values []int, err error) {
 			err = err1
 			return
 		}
-
 		values = append(values, value)
 	}
 	return
-
 }
 
-func writeValues(values []int, outfile string) error {
+func writeValues(values []int, outfile string) (err error) {
 	file, err := os.Create(outfile)
 	if err != nil {
-		p("Failed to created the output file", outfile)
+		p("Failed to create the output file", outfile)
 		return err
 	}
+
 	defer file.Close()
 
 	for _, value := range values {
@@ -100,5 +102,4 @@ func writeValues(values []int, outfile string) error {
 	}
 	return nil
 }
-
 
